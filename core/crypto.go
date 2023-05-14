@@ -11,17 +11,25 @@ func Base64(payload []byte) string {
 }
 
 func Sha256(payload []byte) []byte {
+	defer Log.Sync()
+
 	hash := sha256.New()
 
-	hash.Write(payload)
+	if _, err := hash.Write(payload); err != nil {
+		Log.Errorln("Cannot construct sha-256 hash")
+	}
 
 	return hash.Sum(nil)
 }
 
 func Sha512(payload []byte) []byte {
+	defer Log.Sync()
+
 	hash := sha512.New()
 
-	hash.Write(payload)
+	if _, err := hash.Write(payload); err != nil {
+		Log.Errorln("Cannot construct sha-512 hash")
+	}
 
 	return hash.Sum(nil)
 }
